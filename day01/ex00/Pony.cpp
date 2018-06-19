@@ -6,27 +6,27 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 20:32:55 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/19 21:40:08 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/20 02:25:26 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Pony.hpp"
 #include <iostream>
 
-void	ponyOnTheStack(void)
-{
-	Pony	pony = Pony();
+Pony::Pony(void) {
+	return ;
 }
 
-void	ponyOnTheHeap(void)
-{
-	Pony	*pony = new Pony();
+Pony::~Pony(void) {
+	return ;
 }
 
-int		main(void)
-{
-	std::cout << "Allocating pony on heap" << std::endl;
-	ponyOnTheHeap();
-	std::cout << "Allocating pony on stack" << std::endl;
-	ponyOnTheStack();
-	return (0);
+void	Pony::display(void) {
+	std::cout << "      ,//)   " << std::endl;
+	std::cout << "    ,;;' \\  " << std::endl;
+	std::cout << "  ,;;' ( '\\ " << std::endl;
+	std::cout << "      / '\\_)" << std::endl;
 }
+
+
+
