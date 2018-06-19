@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 19:24:00 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/18 21:25:23 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/19 19:06:21 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ private:
 	std::string	postal_adress;
 	std::string email_adress;
 	std::string phone_number;
-	std::string bithday_date;
+	std::string birthday_date;
 	std::string favorite_meal;
 	std::string	underwear_color;
 	std::string	darkest_secret;
@@ -32,7 +32,8 @@ public:
 	Contact(void);
 	~Contact(void);
 
-	void	print(void);
+	void	printShort(int index);
+	void	printFull(void);
 	void	createContact(void);
 };
 
