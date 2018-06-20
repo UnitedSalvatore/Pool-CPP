@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ex04.cpp                                           :+:      :+:    :+:   */
+/*   Brain.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/20 20:18:35 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/20 20:20:21 by ypikul           ###   ########.fr       */
+/*   Created: 2018/06/20 20:23:11 by ypikul            #+#    #+#             */
+/*   Updated: 2018/06/20 20:35:25 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
+#include "Brain.hpp"
 
-int main(void) {
-	std::string		str = "HI THIS IS BRAIN";
-	std::string		*strp = &str;
-	std::string		&strr = str;
+Brain::Brain(void) {
+	return ;
+}
 
-	std::cout << "Pointer: " << *strp << std::endl;
-	std::cout << "Reference: " << strr << std::endl;
+Brain::~Brain(void) {
+	return ;
+}
+
+std::string	Brain::identify(void) const {
+	const void * address = static_cast<const void*>(this);
+	std::stringstream sstr;
+	sstr << address;
+	return sstr.str();
 }

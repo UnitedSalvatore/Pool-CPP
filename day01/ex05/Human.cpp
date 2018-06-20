@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ex04.cpp                                           :+:      :+:    :+:   */
+/*   Human.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/20 20:18:35 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/20 20:20:21 by ypikul           ###   ########.fr       */
+/*   Created: 2018/06/20 20:30:17 by ypikul            #+#    #+#             */
+/*   Updated: 2018/06/20 20:35:18 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
+#include "Human.hpp"
 
-int main(void) {
-	std::string		str = "HI THIS IS BRAIN";
-	std::string		*strp = &str;
-	std::string		&strr = str;
+std::string	Human::identify(void) const {
+	return this->_brain.identify();
+}
 
-	std::cout << "Pointer: " << *strp << std::endl;
-	std::cout << "Reference: " << strr << std::endl;
+const Brain	&Human::getBrain(void) const {
+	return this->_brain;
+}
+
+Human::Human(void) {
+	return ;
+}
+
+Human::~Human(void) {
+	return ;
 }

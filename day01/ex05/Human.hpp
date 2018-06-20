@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ex04.cpp                                           :+:      :+:    :+:   */
+/*   Human.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/20 20:18:35 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/20 20:20:21 by ypikul           ###   ########.fr       */
+/*   Created: 2018/06/20 20:23:11 by ypikul            #+#    #+#             */
+/*   Updated: 2018/06/20 20:35:15 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <string>
+#ifndef HUMAN_HPP
+# define HUMAN_HPP
 
-int main(void) {
-	std::string		str = "HI THIS IS BRAIN";
-	std::string		*strp = &str;
-	std::string		&strr = str;
+# include "Brain.hpp"
+# include <string>
+# include <iostream>
 
-	std::cout << "Pointer: " << *strp << std::endl;
-	std::cout << "Reference: " << strr << std::endl;
-}
+class Human
+{
+private:
+	const Brain _brain;
+public:
+	Human(void);
+	~Human(void);
+
+	std::string	identify(void) const;
+	const Brain	&getBrain(void) const;
+};
+
+#endif
