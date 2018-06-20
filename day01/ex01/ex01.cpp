@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pony.cpp                                           :+:      :+:    :+:   */
+/*   ex01.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/19 20:32:55 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/20 03:22:40 by ypikul           ###   ########.fr       */
+/*   Created: 2018/06/20 02:56:17 by ypikul            #+#    #+#             */
+/*   Updated: 2018/06/20 03:01:45 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pony.hpp"
 #include <iostream>
+#include <string>
 
-Pony::Pony(void) {
-	return ;
+void	memoryLeak()
+{
+	std::string*	panthere = new std::string("String panthere");
+
+	std::cout << *panthere << std::endl;
+
+	delete panthere;
 }
-
-Pony::~Pony(void) {
-	std::cout << "Pony died :(" << std::endl;
-}
-
-void	Pony::display(void) {
-	std::cout << "      ,//)   " << std::endl;
-	std::cout << "    ,;;' \\  " << std::endl;
-	std::cout << "  ,;;' ( '\\ " << std::endl;
-	std::cout << "      / '\\_)" << std::endl;
-}
-
-
-
