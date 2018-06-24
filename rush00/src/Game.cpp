@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:16:19 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 21:04:28 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 22:03:42 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ Game::Game(void) {
 	start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
-	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(3, COLOR_MAGENTA, COLOR_BLACK);
 	init_pair(4, COLOR_GREEN, COLOR_BLACK);
 	noecho();
 	curs_set(0);
@@ -57,12 +57,14 @@ Game::Game(void) {
 	keypad(this->_game, true);
 	// mvwprintw(_game, 1, 0, "y: %i : x: %i", this->_gameY, this->_gameX);
 	wrefresh(this->_game);
+	this->_aster = new Aster[150];
 	this->_enemies = new Enemy[42];
 	this->_ship = new Ship(this->_gameX, this->_gameY);
 	nodelay(this->_game, true);
 
 	this->score = 0;
 	this->lives = 3;
+	this->counter = 0;
 }
 
 Game::~Game(void) {
@@ -95,6 +97,22 @@ void	Game::addEnemy(void) {
 		}
 }
 
+void	Game::addAster(void) {
+	for (int i = 0; i < 150; i++)
+	{
+		if (this->_aster[i].getAlive() && this->_aster[i].getCoordY() == this->_gameY - 1) {
+			this->_aster[i].setAlive(false);
+		}
+	}
+	if (this->counter == 3) {
+		for (int i = 0; i < 150; i++)
+			if (!(this->_aster[i].getAlive())) {
+				this->_aster[i].newAster(this->_gameX, this->_gameY);
+				return ;
+			}
+	}
+}
+
 void	Game::checkCollision(void) {
 	for (int i = 0; i < this->_gameY; i++) {
 		if (this->_ship->getBullets()[i].getAlive()) {
@@ -119,6 +137,7 @@ void	Game::checkCollision(void) {
 }
 
 void	Game::moveAll(void) {
+
 	for (int i = 0; i < this->_gameY; i++)
 		if (this->_ship->getBullets()[i].getAlive() && !(_ship->getBullets()[i].getCoordY())) {
 			_ship->getBullets()[i].setAlive(false);
@@ -133,6 +152,13 @@ void	Game::moveAll(void) {
 			this->_enemies[i].moveDown();;
 	}
 	checkCollision();
+
+	if (this->counter == 3) {
+		for (int i = 0; i < 150; i++) {
+			if (this->_aster[i].getAlive())
+				this->_aster[i].moveDown();;
+		}
+	}	
 }
 
 void	Game::printAll(void) {
@@ -150,6 +176,14 @@ void	Game::printAll(void) {
 			mvwprintw(_game, _enemies[i].getCoordY(), _enemies[i].getCoordX(), "%c", _enemies[i].getSkin());
 	}
 	wattroff(this->_game, COLOR_PAIR(4));
+
+	wattron(this->_game, COLOR_PAIR(3));
+	for (int i = 0; i < 150; i++) {
+		if (this->_aster[i].getAlive())
+			mvwprintw(_game, _aster[i].getCoordY(), _aster[i].getCoordX(), "%c", _aster[i].getSkin());
+	}
+	wattroff(this->_game, COLOR_PAIR(3));
+
 	wattron(this->_game, COLOR_PAIR(1));
 	mvwprintw(_game, _ship->getCoordY(), _ship->getCoordX() - 1, "<");
 	mvwprintw(_game, _ship->getCoordY(), _ship->getCoordX(), "%c", _ship->getSkin());
@@ -179,6 +213,7 @@ void	Game::play(void) {
 		t1 = clock() / (CLOCKS_PER_SEC / 20);
 		if (t1 > t2)
 		{
+			this->counter += 1;
 			t2 = clock() / (CLOCKS_PER_SEC / 20);
 			c = wgetch(this->_game);
 			switch(c) {
@@ -220,9 +255,13 @@ void	Game::play(void) {
 			if (flag)
 				this->_ship->fire(this->_ship->getCoordY(), this->_ship->getCoordX());
 			addEnemy();
-			moveAll();	
+			addAster();
+			moveAll();
 			printAll();
 			flushinp();
+			if (this->counter > 2)
+				this->counter = 0;
+
 		}
 	}
 	if (this->lives < 1) {

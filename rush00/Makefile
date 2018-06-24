@@ -8,13 +8,14 @@ FILENAMES = main.cpp \
 			Entity.cpp \
 			Ship.cpp \
 			Bullet.cpp \
-			Enemy.cpp
+			Enemy.cpp \
+			Aster.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(FILENAMES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILENAMES:.cpp=.o))
 
 CC = clang++
-FLAGS ?= -Wall -Werror -Wextra -g
+FLAGS ?= -Wall -Werror -Wextra -g -std=c++98
 FLAGS += -I./inc/
 
 all: $(NAME)

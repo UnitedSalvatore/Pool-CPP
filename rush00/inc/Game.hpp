@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:16:49 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 20:58:37 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 22:00:11 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define GAME_HPP
 
 # include "Ship.hpp"
+# include "Aster.hpp"
 # include "Enemy.hpp"
 # include <ncurses.h>
 
@@ -31,6 +32,7 @@ private:
 
 	Ship	*_ship;
 	Enemy	*_enemies;
+	Aster	*_aster;
 
 public:
 	Game(void);
@@ -39,6 +41,7 @@ public:
 
 	int		score;
 	int		lives;
+	int		counter;
 
 	WINDOW	*getWindow(void);
 	void	play(void);
@@ -47,6 +50,7 @@ public:
 	void	moveAll(void);
 	void	printAll(void);
 	void	addEnemy(void);
+	void	addAster(void);
 	void	checkCollision(void);
 	Game &	operator=(Game const & copy);
 };
