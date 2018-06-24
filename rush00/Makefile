@@ -6,7 +6,9 @@ OBJ_DIR = ./obj/
 FILENAMES = main.cpp \
 			Game.cpp \
 			Entity.cpp \
-			Ship.cpp
+			Ship.cpp \
+			Bullet.cpp \
+			Enemy.cpp
 
 SRC = $(addprefix $(SRC_DIR), $(FILENAMES))
 OBJ = $(addprefix $(OBJ_DIR), $(FILENAMES:.cpp=.o))

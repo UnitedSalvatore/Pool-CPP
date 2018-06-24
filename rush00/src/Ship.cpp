@@ -6,10 +6,11 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:33:00 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 04:03:39 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 05:52:05 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "Bullet.hpp"
 #include "Ship.hpp"
 
 Ship::Ship() {
@@ -23,8 +24,31 @@ Ship::Ship(int const winX, int const winY) {
 	this->_x = winX / 2;
 	this->_alive = true;
 	this->_skin = '^';
+	this->_bullets = new Bullet[this->_yMax];
 }
+
 
 Ship::~Ship() {
 	this->_alive = false;
+	delete [] this->_bullets;
+}
+
+Bullet	*Ship::getBullets(void) const {
+	return (this->_bullets);
+}
+
+void	Ship::fire(int y, int x) {
+	for (int i = 0; i < this->_yMax; i++)
+		if (this->_bullets[i].getAlive() && !(this->_bullets[i].getCoordY())) {
+			this->_bullets[i].setAlive(false);
+		}
+	if (!y)
+		return ;
+	for (int i = 0; i < this->_yMax; i++)
+		if (!(this->_bullets[i].getAlive())) {
+			this->_bullets[i].setAlive(true);
+			this->_bullets[i].setCoordY(y - 1);
+			this->_bullets[i].setCoordX(x);
+			return ;
+		}
 }

@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 19:19:33 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 03:32:43 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 04:29:56 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ public:
     void            moveRight();
     Entity &        operator=(Entity const & obj);
     virtual void    setStart(int maxX, int maxY, int enem);
+    void			setBullets(Entity * bullet, Entity * player);
 protected:
     int     _x;
     int     _y;
