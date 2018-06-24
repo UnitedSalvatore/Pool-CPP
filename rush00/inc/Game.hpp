@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:16:49 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 06:31:34 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 08:42:27 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ private:
 	int		_gameY;
 
 	Ship	*_ship;
-	 Enemy	*_enemies;
+	Enemy	*_enemies;
 public:
 	Game(void);
 	~Game(void);
+
+	int		score;
 
 	WINDOW	*getWindow(void);
 	void	play(void);
@@ -42,6 +44,7 @@ public:
 	void	moveAll(void);
 	void	printAll(void);
 	void	addEnemy(void);
+	void	checkCollision(void);
 };
 
 #endif
