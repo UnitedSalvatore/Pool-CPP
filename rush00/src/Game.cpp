@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:16:19 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 08:46:51 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 21:04:28 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,19 @@
 #include "Game.hpp"
 #include <ncurses.h>
 #include <ctime>
+#include <unistd.h>
 
-Game::
+Game::Game (Game const & copy) {
+
+	*this = copy;
+}
+
+Game &	Game::operator=(Game const & obj) {
+
+	//Soory nothing here
+	(void)obj;
+	return (*this);
+}
 
 Game::Game(void) {
 	this->_win = initscr();
@@ -28,7 +39,7 @@ Game::Game(void) {
 	cbreak();
 	start_color();
 	init_pair(1, COLOR_CYAN, COLOR_BLACK);
-	init_pair(2, COLOR_RED, COLOR_BLACK);
+	init_pair(2, COLOR_BLACK, COLOR_WHITE);
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(4, COLOR_GREEN, COLOR_BLACK);
 	noecho();
@@ -51,6 +62,7 @@ Game::Game(void) {
 	nodelay(this->_game, true);
 
 	this->score = 0;
+	this->lives = 3;
 }
 
 Game::~Game(void) {
@@ -71,9 +83,11 @@ int		Game::getY(void) {
 
 void	Game::addEnemy(void) {
 	for (int i = 0; i < 42; i++)
+	{
 		if (this->_enemies[i].getAlive() && this->_enemies[i].getCoordY() == this->_gameY - 1) {
 			this->_enemies[i].setAlive(false);
 		}
+	}
 	for (int i = 0; i < 42; i++)
 		if (!(this->_enemies[i].getAlive())) {
 			this->_enemies[i].newEnemy(this->_gameX, this->_gameY);
@@ -92,6 +106,14 @@ void	Game::checkCollision(void) {
 					this->score += 10;
 				}
 			}
+		}
+	}
+	for (int i = 0; i < 42; i++) {
+		if (this->_enemies[i].getAlive() && _enemies[i].getCoordY() == _ship->getCoordY() && \
+			_enemies[i].getCoordX() == _ship->getCoordX()) {
+			this->lives -= 1;
+			this->_enemies[i].setAlive(false);
+			this->score += 10;
 		}
 	}
 }
@@ -115,6 +137,7 @@ void	Game::moveAll(void) {
 
 void	Game::printAll(void) {
 	wclear(this->_game);
+	wbkgd(this->_panel, COLOR_PAIR(2));
 	wattron(this->_game, COLOR_PAIR(1));
 	for (int i = 0; i < this->_gameY; i++) {
 		if (this->_ship->getBullets()[i].getAlive())
@@ -128,20 +151,31 @@ void	Game::printAll(void) {
 	}
 	wattroff(this->_game, COLOR_PAIR(4));
 	wattron(this->_game, COLOR_PAIR(1));
+	mvwprintw(_game, _ship->getCoordY(), _ship->getCoordX() - 1, "<");
 	mvwprintw(_game, _ship->getCoordY(), _ship->getCoordX(), "%c", _ship->getSkin());
+	mvwprintw(_game, _ship->getCoordY(), _ship->getCoordX() + 1, ">");
 	wattroff(this->_game, COLOR_PAIR(1));
 
 	mvwprintw(this->_panel, this->_panelY / 2, this->_panelX / 7, "SCORE: %i", score);
+	if (this->lives == 3)
+		mvwprintw(this->_panel, this->_panelY / 2, this->_panelX - this->_panelX / 5, "LIVES: <3 <3 <3");
+	else if (this->lives == 2)
+		mvwprintw(this->_panel, this->_panelY / 2, this->_panelX - this->_panelX / 5, "LIVES: <3 <3   ");
+	else if (this->lives == 1)
+		mvwprintw(this->_panel, this->_panelY / 2, this->_panelX - this->_panelX / 5, "LIVES: <3      ");
+	else
+		mvwprintw(this->_panel, this->_panelY / 2, this->_panelX - this->_panelX / 5, "LIVES: NOT FOUND");
 	wrefresh(this->_panel);
 }
 
 void	Game::play(void) {
 	clock_t	t1 = 0;
 	clock_t	t2 = 0;
+	int		flag = 0;
 	bool	exit = false;
 	int		c;
 
-	while (!exit) {
+	while (!exit && this->score < 420 && this->lives > 0) {
 		t1 = clock() / (CLOCKS_PER_SEC / 20);
 		if (t1 > t2)
 		{
@@ -158,14 +192,24 @@ void	Game::play(void) {
 				}
 				case KEY_LEFT: {
 					this->_ship->moveLeft();
+					this->_ship->moveLeft();
 					break;
 				}
 				case KEY_RIGHT: {
 					this->_ship->moveRight();
+					this->_ship->moveRight();
+					break;
+				}
+				case 'q': {
+					if (!flag)
+						flag = 1;
+					else
+						flag = 0;
 					break;
 				}
 				case ' ': {
-					this->_ship->fire(this->_ship->getCoordY(), this->_ship->getCoordX());
+					if (!flag)
+						this->_ship->fire(this->_ship->getCoordY(), this->_ship->getCoordX());
 					break;
 				}
 				case 27: {
@@ -173,10 +217,27 @@ void	Game::play(void) {
 					break;
 				}
 			}
+			if (flag)
+				this->_ship->fire(this->_ship->getCoordY(), this->_ship->getCoordX());
 			addEnemy();
 			moveAll();	
 			printAll();
+			flushinp();
 		}
+	}
+	if (this->lives < 1) {
+		nodelay(this->_game, false);
+		wclear(this->_game);
+		mvwprintw(this->_game, this->_gameY / 2, this->_gameX / 2 - 10, "YOU LOSE :(");
+		while (wgetch(this->_game) != 27)
+			;
+	}
+	if (this->score >= 420) {
+		nodelay(this->_game, false);
+		wclear(this->_game);
+		mvwprintw(this->_game, this->_gameY / 2, this->_gameX / 2 - 10, "YOU WIN :)");
+		while (wgetch(this->_game) != 27)
+			;
 	}
 }
 

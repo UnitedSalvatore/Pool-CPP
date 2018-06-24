@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/23 17:33:00 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 08:39:26 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 20:53:11 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 
 Ship::Ship() {
 	return ;
+}
+
+Ship::Ship(Ship const & copy) {
+	
+	*this = copy;
+}
+
+Ship &		Ship::operator=(Ship const & copy) {
+
+	_x = copy.getCoordX();
+	_y = copy.getCoordY();
+	_xMax = copy.getMaxX();
+	_yMax = copy.getMaxY();
+	return (*this);
 }
 
 Ship::Ship(int const winX, int const winY) {
@@ -29,10 +43,10 @@ Ship::Ship(int const winX, int const winY) {
 
 
 Ship::~Ship() {
-	this->_alive = false;
+
 }
 
-Bullet	*Ship::getBullets(void) const {
+Bullet* Ship::getBullets(void) const {
 	return (this->_bullets);
 }
 
@@ -42,7 +56,7 @@ void	Ship::fire(int y, int x) {
 	for (int i = 0; i < this->_yMax; i++)
 		if (!(this->_bullets[i].getAlive())) {
 			this->_bullets[i].setAlive(true);
-			this->_bullets[i].setCoordY(y - 1);
+			this->_bullets[i].setCoordY(y);
 			this->_bullets[i].setCoordX(x);
 			return ;
 		}

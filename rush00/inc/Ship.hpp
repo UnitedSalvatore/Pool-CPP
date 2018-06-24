@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/24 02:44:28 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/24 05:36:02 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/06/24 20:53:33 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ public:
 
 	Bullet	*getBullets() const;
 	void	fire(int y, int x);
+
+	Ship &        operator=(Ship const & obj);
 };
 
 #endif
