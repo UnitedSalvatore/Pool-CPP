@@ -1,6 +1,6 @@
-NAME = iter
+NAME = array
 
-SRC = iter.cpp
+SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 CC = clang++
@@ -23,4 +23,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-	
