@@ -6,15 +6,16 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/19 20:32:55 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/20 14:01:28 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/07/17 03:32:57 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pony.hpp"
+
 #include <iostream>
 
 Pony::Pony(void) {
-	return ;
+	std::cout << "Pony was born :)" << std::endl;
 }
 
 Pony::~Pony(void) {
