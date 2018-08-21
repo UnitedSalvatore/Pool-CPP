@@ -6,7 +6,7 @@
 /*   By: ypikul <ypikul@student.unit.ua>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/18 19:13:11 by ypikul            #+#    #+#             */
-/*   Updated: 2018/06/19 19:09:41 by ypikul           ###   ########.fr       */
+/*   Updated: 2018/08/21 18:58:23 by ypikul           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ void	Phonebook::print(void) {
 }
 
 void	Phonebook::addContact(void) {
-	if (this->contacts_count == 8)
+	if (this->contacts_count == 8) {
 		std::cout << "Phonebook is full. Restart the program to reset it" << std::endl;
+		return ;
+	}
 	this->contact[this->contacts_count++].createContact();
 }
